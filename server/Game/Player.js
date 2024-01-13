@@ -28,9 +28,11 @@ export class Player
 	 * @param {Array<number, number>} pos 
 	 * @param {number} id
 	 */
-	constructor(session, state, color, pos, id)
+	constructor(session, state, color, pos, id, width, height)
 	{
 		this.session = 		session;
+		this.width = 		width;
+		this.height = 		height;
 		this.state = 		state;
 		this.color = 		color;
 		this.pos = 			pos;
@@ -39,6 +41,12 @@ export class Player
 
 	/** @type {Session} */
 	session = null;
+
+	/** @type {number} */
+	height = 0;
+
+	/** @type {number} */
+	width = 0;
 
 	/** @type {States} */
 	state = States.None;

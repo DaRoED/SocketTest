@@ -10,14 +10,20 @@ export class Player extends GameObject
 
 	moveSpped = 200;
 
+	width = 25;
+
+	height = 25;
+
 	/**
 	 * 
 	 * @param {Array<number>} pos
 	 * @param {Color} color
 	 * @param {number} id
 	 */
-	init(pos, color, id, state)
+	init(pos, color, id, state, width, height)
 	{
+		this.width = width;
+		this.height = height;
 		this.pos = pos;
 		this.color = color;
 		this.id = id;
@@ -76,7 +82,7 @@ export class Player extends GameObject
 		super.render();
 
 		Utils.SetColor(Color.RED);
-		ctx.fillRect(this.pos[0] - 25, this.pos[1] - 25, 50, 50);
+		ctx.fillRect(this.pos[0] - this.width, this.pos[1] - this.height, this.width * 2, this.height * 2);
 	}
 
 	/**
@@ -87,5 +93,22 @@ export class Player extends GameObject
 	{
 		this.destPos = destPos;
 		this.setState(States.Move);
+	}
+
+	/**
+	 * 
+	 * @param {number} width 
+	 */
+	setWidth(width)
+	{
+		this.width = width;
+	}
+
+	/**
+	 * @param {number} height 
+	 */
+	setHeight(height)
+	{
+		this.height = height;
 	}
 }

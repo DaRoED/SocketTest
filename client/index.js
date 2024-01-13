@@ -46,7 +46,7 @@ window.onload = () =>
 		{
 			const playerInfo = packet.objects[i];
 			const player = new Player();
-			player.init(playerInfo.pos, playerInfo.color, playerInfo.id, playerInfo.state);
+			player.init(playerInfo.pos, playerInfo.color, playerInfo.id, playerInfo.state, playerInfo.width, playerInfo.height);
 
 			SceneManager.getInstance().getScene().add_object(player);
 		}
@@ -59,7 +59,7 @@ window.onload = () =>
 		const playerInfo = packet.info;
 
 		const my_player = new MyPlayer(socket);
-		my_player.init(playerInfo.pos, playerInfo.color, playerInfo.id, playerInfo.state);
+		my_player.init(playerInfo.pos, playerInfo.color, playerInfo.id, playerInfo.state, playerInfo.width, playerInfo.height);
 
 		scene.set_myPlayer(my_player);
 

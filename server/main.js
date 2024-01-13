@@ -56,11 +56,13 @@ io.on('connection', socket => {
 		const id = GENERATOR.uuid();
 		const pos = [getRandom(250, 500), getRandom(250, 500)];
 		const color = Math.round(Math.random() | 7);
+		const width = 25;
+		const height = 25;
 
 		const myPlayerPacket = new MyPlayerPacket();
-		myPlayerPacket.info  = new PlayerInfo(id, pos, color, States.Idle);
+		myPlayerPacket.info  = new PlayerInfo(id, pos, color, States.Idle, width, height);
 
-		const player = new Player(session, States.Idle, color, pos, id);
+		const player = new Player(session, States.Idle, color, pos, id, width, height);
 		session.player = player;
 
 		GRoom.add_object(player);
@@ -72,7 +74,7 @@ io.on('connection', socket => {
 
 		players.forEach((player, id) =>
 		{
-			const playerInfo = new PlayerInfo(player.id, player.pos, player.color, player.state);
+			const playerInfo = new PlayerInfo(player.id, player.pos, player.color, player.state, width, height);
 			addObjectPacket.objects.push(playerInfo);
 		});
 
