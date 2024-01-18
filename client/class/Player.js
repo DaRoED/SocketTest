@@ -58,7 +58,6 @@ export class Player extends GameObject
 		if (dist === 0)
 		{
 			this.setState(States.Idle);
-			return;
 		}
 
 		if (dist > 0)

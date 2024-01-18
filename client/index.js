@@ -14,7 +14,7 @@ import { limitLoop } from "./class/limitloop.js";
 import { MovePacket } from "./class/Packet/MovePacket.js";
 
 
-const fps = 60;
+const fps = 100;
 
 /** @type {HTMLCanvasElement} */
 let canvas = null;
@@ -84,7 +84,7 @@ window.onload = () =>
 
 		const player = SceneManager.getInstance().getScene().find_object(packet.id);
 
-		if (player)
+		if (player && (player.id !== SceneManager.getInstance().getScene().my_player.id))
 		{
 			player.setDestPos(packet.pos);
 		}

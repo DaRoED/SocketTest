@@ -24,11 +24,11 @@ export class GameObject
     {
 		switch (this.state) {
 			case States.Idle:
-				this.IdleUpdate(ctx, dt);
+				this.IdleUpdate(dt);
 				break;
 
 			case States.Move:
-				this.MoveUpdate(ctx, dt);
+				this.MoveUpdate(dt);
 				break;
 
 			case States.None:
