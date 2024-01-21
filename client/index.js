@@ -12,7 +12,7 @@ import { MyPlayer } from "./class/MyPlayer.js";
 import { RemoveObjectPacket } from "./class/Packet/RemoveObjectPacket.js";
 import { limitLoop } from "./class/limitloop.js";
 import { MovePacket } from "./class/Packet/MovePacket.js";
-
+import { InputManager } from './class/gameput.js';
 
 const fps = 100;
 
@@ -112,8 +112,8 @@ function init()
 
 	SceneManager.getInstance().init(scene);
 
-	document.getElementsByTagName('body')[0].style.width = `${window.innerWidth}px`;
-	document.getElementsByTagName('body')[0].style.height = `${window.innerHeight}px`;
+	document.body.style.width = `${window.innerWidth}px`;
+	document.body.style.height = `${window.innerHeight}px`;
 }
 
 function update()

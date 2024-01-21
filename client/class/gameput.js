@@ -1,4 +1,4 @@
-const GAMEPUT = { REVISION:2 };
+const GAMEPUT = { REVISION:2, isMoving: false };
 
 GAMEPUT.devices = {};
 GAMEPUT.pressed_combinations = {};
