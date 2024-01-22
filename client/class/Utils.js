@@ -1,7 +1,7 @@
 export const Color = 
 {
-	WHITE: 0,
-	BLACK: 1,
+	BLACK: 0,
+	WHITE: 1,
 	RED: 2,
 	BLUE: 3,
 	GREEN: 4,
@@ -91,5 +91,10 @@ export class Utils
 	static get deltaTime()
 	{
 		return this.#dt;
+	}
+
+	static clamp(num, a, b)
+	{
+		return Math.max(Math.min(num, Math.max(a, b)), Math.min(a, b));
 	}
 }

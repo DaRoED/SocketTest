@@ -55,7 +55,7 @@ io.on('connection', socket => {
 		// MyPlayer 패킷을 보냄 => 클라이언트에서 MyPlayer를 생성
 		const id = GENERATOR.uuid();
 		const pos = [getRandom(250, 500), getRandom(250, 500)];
-		const color = Math.round(Math.random() | 7);
+		const color = getRandom(1, 6);
 		const width = 25;
 		const height = 25;
 

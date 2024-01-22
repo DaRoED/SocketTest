@@ -12,7 +12,8 @@ import { MyPlayer } from "./class/MyPlayer.js";
 import { RemoveObjectPacket } from "./class/Packet/RemoveObjectPacket.js";
 import { limitLoop } from "./class/limitloop.js";
 import { MovePacket } from "./class/Packet/MovePacket.js";
-import { InputManager } from './class/gameput.js';
+import { CameraComponent } from "./class/Components/CameraComponent.js";
+import { Background } from "./class/Background.js";
 
 const fps = 100;
 
@@ -61,6 +62,8 @@ window.onload = () =>
 		const my_player = new MyPlayer(socket);
 		my_player.init(playerInfo.pos, playerInfo.color, playerInfo.id, playerInfo.state, playerInfo.width, playerInfo.height);
 
+		my_player.add_component(new CameraComponent());
+
 		scene.set_myPlayer(my_player);
 
 		SceneManager.getInstance().getScene().add_object(my_player);
@@ -105,6 +108,12 @@ window.onload = () =>
 	update();
 };
 
+window.onresize = ev =>
+{
+	document.body.style.width = `${window.innerWidth}px`;
+	document.body.style.height = `${window.innerHeight}px`;
+};
+
 
 function init()
 {
@@ -114,6 +123,11 @@ function init()
 
 	document.body.style.width = `${window.innerWidth}px`;
 	document.body.style.height = `${window.innerHeight}px`;
+
+	const background = new Background();
+	background.init('../resources/map.jpg');
+
+	scene.add_object(background);
 }
 
 function update()
@@ -121,9 +135,9 @@ function update()
 	canvas.width = 1280;
 	canvas.height = 720;
 
-	Utils.SetColor(Color.BLACK);
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	// Utils.SetColor(Color.BLACK);
+	// ctx.clearRect(0, 0, canvas.width, canvas.height);
+	// ctx.fillRect(0, 0, canvas.width, canvas.height);
 	scene.update(Utils.deltaTime);
 	scene.render();
 

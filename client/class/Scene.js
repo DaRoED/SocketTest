@@ -1,16 +1,18 @@
-import { MyPlayer } from "./MyPlayer.js";
 import { Player } from "./Player.js";
+// import { MyPlayer } from "./MyPlayer.js";
 
 export class Scene
 {
 	/** @type {CanvasRenderingContext2D} */
 	ctx;
 
-	/** @type {Array<Player>} */
+	/** @type {Array<GameObject>} */
 	objects = [];
 
 	/** @type {MyPlayer} */
 	my_player = null;
+
+	camera_pos = [0, 0];
 
 	/**
 	 * 

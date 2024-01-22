@@ -31,7 +31,7 @@ export class MyPlayer extends Player
 		super.MoveUpdate(dt);
 	}
 
-	inputUpdate(dt)
+	InputUpdate(dt)
 	{
 		const moveVec = [0, 0];
 
@@ -59,8 +59,6 @@ export class MyPlayer extends Player
 
 		if (dist > 0)
 		{
-			InputManager.isMoving = true;
-
 			moveVec[0] /= dist;
 			moveVec[1] /= dist;
 
@@ -74,10 +72,6 @@ export class MyPlayer extends Player
 			movePacket.pos = this.destPos;
 
 			this.socket.emit(PacketTypeEnum.move, PacketUtil.SerializePacket(movePacket));
-		}
-		else
-		{
-			InputManager.isMoving = false;
 		}
 	}
 }

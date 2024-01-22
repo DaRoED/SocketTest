@@ -7,6 +7,7 @@ export const States =
 
 export class GameObject
 {
+	components = [];
 	state = States.None;
 	pos = [0, 0];
 
@@ -34,6 +35,11 @@ export class GameObject
 			case States.None:
 				throw new TypeError('오브젝트의 상태값이 None 입니다.');
 		}
+
+		for (const component of this.components)
+		{
+			component.update(ctx, dt);
+		}
     }
 
 	IdleUpdate(ctx, dt)
@@ -52,7 +58,10 @@ export class GameObject
 	 */
     render(ctx)
     {
-
+		for (const component of this.components)
+		{
+			component.render(ctx);
+		}
     }
 
 	/**
