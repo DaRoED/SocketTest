@@ -10,6 +10,7 @@ export class GameObject
 	components = [];
 	state = States.None;
 	pos = [0, 0];
+	id = 0;
 
     init()
     {
@@ -32,7 +33,7 @@ export class GameObject
 				this.MoveUpdate(dt);
 				break;
 
-			case States.None:
+			default:
 				throw new TypeError('오브젝트의 상태값이 None 입니다.');
 		}
 

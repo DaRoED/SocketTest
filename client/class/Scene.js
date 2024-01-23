@@ -1,5 +1,4 @@
-import { Player } from "./Player.js";
-// import { MyPlayer } from "./MyPlayer.js";
+import { GameObject } from "./GameObject.js";
 
 export class Scene
 {
@@ -8,9 +7,6 @@ export class Scene
 
 	/** @type {Array<GameObject>} */
 	objects = [];
-
-	/** @type {MyPlayer} */
-	my_player = null;
 
 	camera_pos = [0, 0];
 
@@ -51,7 +47,7 @@ export class Scene
 	/**
 	 * 
 	 * @param {number} id 
-	 * @returns {Player | undefined}
+	 * @returns {GameObject | undefined}
 	 */
 	find_object(id)
 	{
@@ -60,7 +56,7 @@ export class Scene
 
 	/**
 	 * 
-	 * @param {Player} object 
+	 * @param {GameObject} object 
 	 */
 	add_object(object)
 	{
@@ -77,25 +73,10 @@ export class Scene
 
 	/**
 	 * 
-	 * @param {Player} object 
+	 * @param {GameObject} object 
 	 */
 	remove_object(object)
 	{
 		this.objects.splice(this.objects.indexOf(object));
-	}
-
-	/**
-	 * 
-	 * @param {MyPlayer} my_player 
-	 * @returns {boolean}
-	 */
-	set_myPlayer(my_player)
-	{
-		if (this.my_player) return false;
-		else
-		{
-			this.my_player = my_player;
-			return true;
-		}
 	}
 }

@@ -1,13 +1,26 @@
-import { EnterPacket } from "./Packet/EnterPacket.js";
-import { PlayerInfo } from "./Packet/PlayerInfo.js";
-import { PacketUtil } from "./Packet/PacketUtil.js";
-import { Player } from "./Player.js";
 import { Scene } from "./Scene.js";
+import { StartScene } from "./StartScene.js";
+import { LoadingScene } from "./LoadingScene.js";
+import { GameScene } from "./GameScene.js";
+
+export const SceneType =
+{
+	None: 0,
+	Start: 1,
+	Loading: 2,
+	Game: 3,
+}
 
 export class SceneManager
 {
+	/** @type {CanvasRenderingContext2D} */
+	ctx = null;
+
 	/** @type {Scene} */
 	scene = null;
+
+	/** @type {SceneType} */
+	sceneType = SceneType.None;
 
 	/** @type {SceneManager} */
 	static #instance = null;
@@ -28,11 +41,51 @@ export class SceneManager
 
 	/**
 	 * 
+	 * @param {CanvasRenderingContext2D} ctx 
 	 * @param {Scene} scene 
 	 */
-	init(scene)
+	init(ctx, sceneType)
 	{
-		this.scene = scene;
+		this.ctx = ctx;
+		this.sceneType = SceneType[sceneType];
+		this.changeScene(sceneType);
+	}
+
+	/**
+	 * 
+	 * @param {SceneType} type 
+	 */
+	changeScene(type)
+	{
+		switch (type) {
+			case SceneType.Start:
+				if (!(this.scene instanceof StartScene))
+				{
+					const scene = new StartScene(this.ctx);
+					this.scene = scene;
+				}
+				break;
+
+			case SceneType.Game:
+				if (!(this.scene instanceof GameScene))
+				{
+					const scene = new GameScene(this.ctx);
+					this.scene = scene;
+				}
+				break;
+
+			case SceneType.Loading:
+				if (!(this.scene instanceof LoadingScene))
+				{
+					const scene = new LoadingScene(this.ctx);
+					this.scene = scene;
+				}
+				break;
+			default:
+				throw new TypeError('Scene 타입이 이상합니다.');
+		}
+
+		this.scene.init();
 	}
 
 	/** @type {Scene} */
@@ -43,29 +96,10 @@ export class SceneManager
 
 	/**
 	 * 
-	 * @param {EnterPacket} packet 
+	 * @returns {SceneType}
 	 */
-	HandleEnter(packet)
+	getSceneType()
 	{
-		for (let i = 0; i < packet.objects.length; i++)
-		{
-			const playerInfo = packet.objects[i];
-			const player = new Player();
-			player.init(scoekt, playerInfo.pos, playerInfo.color);
-
-			this.scene.add_object(player);
-		}
-	}
-
-	/**
-	 * 
-	 * @param  {PlayerInfo} playerInfos
-	 * @returns {EnterPacket}
-	 */
-	static Make_EnterPacket(playerInfo)
-	{
-		const packet = new EnterPacket();
-		packet.objects.push(playerInfo);
-		return PacketUtil.SerializePacket(packet);
+		return this.sceneType;
 	}
 }

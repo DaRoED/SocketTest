@@ -1,17 +1,19 @@
 import { GameObject } from "./GameObject.js";
 import { SceneManager } from "./SceneManager.js";
 import { Utils } from "./Utils.js";
+import { GEN_UUID } from "./GEN_UUID.js"
 
-export class Background extends GameObject
+export class ImageTexture extends GameObject
 {
 	/** @type {HTMLImageElement} */
 	image = null;
 
-	init(src)
+	init(src, width = null, height = null)
 	{
 		this.pos = [0, 0];
+		this.id = GEN_UUID();
 
-		const image = new Image();
+		const image = width != null && height != null ? new Image(width, height) : new Image();
 		image.src = src;
 
 		this.image = image;
@@ -45,6 +47,6 @@ export class Background extends GameObject
 
 		Utils.SetAlpha(1);
 
-		ctx.drawImage(this.image, render_pos[0], render_pos[1]);
+		ctx.drawImage(this.image, render_pos[0], render_pos[1], width, height);
 	}
 }

@@ -49,6 +49,7 @@ io.on('connection', socket => {
 	const session = SessionManager.createSession(socket);
 
 
+	socket.on(PacketTypeEnum.enter, () =>
 	{
 		console.log(`id ${session.getSocketId()} is connected`);
 
@@ -85,7 +86,7 @@ io.on('connection', socket => {
 		b_addObjectPacket.objects.push(myPlayerPacket.info);
 
 		SessionManager.broadcast(PacketTypeEnum.add_object, b_addObjectPacket);
-	}
+	});
 
 	socket.on(PacketTypeEnum.move, packet_d =>
 	{

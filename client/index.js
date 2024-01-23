@@ -1,7 +1,6 @@
 // import { Socket } from "socket.io";
 import { Player } from "./class/Player.js";
-import { Scene } from "./class/Scene.js";
-import { SceneManager } from "./class/SceneManager.js";
+import { SceneManager, SceneType } from "./class/SceneManager.js";
 import { Color, Utils } from "./class/Utils.js";
 import { PlayerInfo, States } from "./class/Packet/PlayerInfo.js";
 import { PacketTypeEnum } from "./class/Packet/PacketType.js";
@@ -13,7 +12,8 @@ import { RemoveObjectPacket } from "./class/Packet/RemoveObjectPacket.js";
 import { limitLoop } from "./class/limitloop.js";
 import { MovePacket } from "./class/Packet/MovePacket.js";
 import { CameraComponent } from "./class/Components/CameraComponent.js";
-import { Background } from "./class/Background.js";
+import { StartScene } from "./class/StartScene.js";
+import { ImageTexture } from "./class/ImageTexture.js";
 
 const fps = 100;
 
@@ -22,9 +22,6 @@ let canvas = null;
 
 /** @type {CanvasRenderingContext2D} */
 let ctx = null;
-
-/** @type {Scene} */
-let scene = null;
 
 
 
@@ -64,7 +61,7 @@ window.onload = () =>
 
 		my_player.add_component(new CameraComponent());
 
-		scene.set_myPlayer(my_player);
+		SceneManager.getInstance().getScene().set_myPlayer(my_player);
 
 		SceneManager.getInstance().getScene().add_object(my_player);
 	});
@@ -102,8 +99,6 @@ window.onload = () =>
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
 
-	scene = new Scene(ctx);
-
 	init();
 	update();
 };
@@ -119,19 +114,16 @@ function init()
 {
 	Utils.Init(ctx);
 
-	SceneManager.getInstance().init(scene);
+	SceneManager.getInstance().init(ctx, SceneType.Start);
 
 	document.body.style.width = `${window.innerWidth}px`;
 	document.body.style.height = `${window.innerHeight}px`;
-
-	const background = new Background();
-	background.init('../resources/map.jpg');
-
-	scene.add_object(background);
 }
 
 function update()
 {
+	const scene = SceneManager.getInstance().getScene();
+
 	canvas.width = 1280;
 	canvas.height = 720;
 
