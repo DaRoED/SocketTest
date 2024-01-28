@@ -55,13 +55,13 @@ export class SceneManager
 	 * 
 	 * @param {SceneType} type 
 	 */
-	changeScene(type)
+	changeScene(type, ...args)
 	{
 		switch (type) {
 			case SceneType.Start:
 				if (!(this.scene instanceof StartScene))
 				{
-					const scene = new StartScene(this.ctx);
+					const scene = new StartScene(this.ctx, ...args);
 					this.scene = scene;
 				}
 				break;
@@ -69,7 +69,7 @@ export class SceneManager
 			case SceneType.Game:
 				if (!(this.scene instanceof GameScene))
 				{
-					const scene = new GameScene(this.ctx);
+					const scene = new GameScene(this.ctx, ...args);
 					this.scene = scene;
 				}
 				break;
@@ -77,7 +77,7 @@ export class SceneManager
 			case SceneType.Loading:
 				if (!(this.scene instanceof LoadingScene))
 				{
-					const scene = new LoadingScene(this.ctx);
+					const scene = new LoadingScene(this.ctx, ...args);
 					this.scene = scene;
 				}
 				break;

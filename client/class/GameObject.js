@@ -1,3 +1,5 @@
+import { GEN_UUID } from "./GEN_UUID.js"
+
 export const States =
 {
 	None: 0,
@@ -14,7 +16,7 @@ export class GameObject
 
     init()
     {
-	
+		this.id = GEN_UUID();
     }
 
 	/**
@@ -73,11 +75,7 @@ export class GameObject
 	{
 		this.pos = pos;
 	}
-
-	/**
-	 * 
-	 * @param {States} state 
-	 */
+	
 	setState(state)
 	{
 		this.state = state;

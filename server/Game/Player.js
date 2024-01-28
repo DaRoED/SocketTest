@@ -28,7 +28,7 @@ export class Player
 	 * @param {Array<number, number>} pos 
 	 * @param {number} id
 	 */
-	constructor(session, state, color, pos, id, width, height)
+	constructor(session, state, color, pos, id, width, height, name)
 	{
 		this.session = 		session;
 		this.width = 		width;
@@ -37,6 +37,7 @@ export class Player
 		this.color = 		color;
 		this.pos = 			pos;
 		this.id = 			id;
+		this.name = 		name;
 	}
 
 	/** @type {Session} */

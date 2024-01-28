@@ -7,7 +7,7 @@ export const States =
 
 export class PlayerInfo
 {
-	constructor(id, pos, color, state, width, height)
+	constructor(id, pos, color, state, width, height, name)
 	{
 		this.id = id;
 		this.pos = pos;
@@ -15,6 +15,7 @@ export class PlayerInfo
 		this.state = state;
 		this.width = width;
 		this.height = height;
+		this.name = name;
 	}
 
 	id = 0;
@@ -22,7 +23,8 @@ export class PlayerInfo
 	color = null;
 	width = 0;
 	height = 0;
-	
+	name = '';
+
 	/** @type {States} */
 	state = States.None;
 }

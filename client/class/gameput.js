@@ -367,6 +367,8 @@ document.addEventListener("keydown", function(event) {
 document.addEventListener("keyup", function(event) {
 	GAMEPUT.devices.keyboard._manageKeyUp(event);
 });
+
+
 GAMEPUT.devices.mouse = {};
 GAMEPUT.devices.mouse.pressed = {};
 GAMEPUT.devices.mouse.frameDown = {};
@@ -380,6 +382,7 @@ GAMEPUT.devices.mouse.map = {
 		'mousecentre': 'mousecenter',
 		'click': ['mouseleft', 'mouseright', 'mousecenter']
 };
+GAMEPUT.devices.mouse.c_pos = [0, 0];
 
 GAMEPUT.devices.mouse.isMine = function(name) {
 	return typeof this.map[name] != "undefined";
@@ -450,7 +453,6 @@ GAMEPUT.devices.mouse._manageMouseUp = function(event) {
 };
 
 GAMEPUT.devices.mouse.frameSetup = function() {
-	var i;
 	for(let i in this.frameDown) {
 		if(this.frameDown.hasOwnProperty(i)) {
 			this.down[i] = this.frameDown[i];
@@ -465,6 +467,21 @@ GAMEPUT.devices.mouse.frameSetup = function() {
 	}
 };
 
+/**
+ * 
+ * @param {CanvasRenderingContext2D} ctx 
+ */
+GAMEPUT.getMousePos = ctx =>
+{
+	const rect = ctx.canvas.getBoundingClientRect();
+	const c_pos = GAMEPUT.devices.mouse.c_pos;
+
+	return [c_pos[0] - rect.left, c_pos[1] - rect.top];
+}
+
+document.addEventListener("mousemove", function(event) {
+	GAMEPUT.devices.mouse.c_pos = [event.clientX, event.clientY];
+});
 
 document.addEventListener("mousedown", function(event) {
 	GAMEPUT.devices.mouse._manageMouseDown(event || window.event);

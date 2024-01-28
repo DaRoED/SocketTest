@@ -1,7 +1,6 @@
 import { GameObject } from "./GameObject.js";
 import { SceneManager } from "./SceneManager.js";
 import { Utils } from "./Utils.js";
-import { GEN_UUID } from "./GEN_UUID.js"
 
 export class ImageTexture extends GameObject
 {
@@ -10,10 +9,11 @@ export class ImageTexture extends GameObject
 
 	init(src, width = null, height = null)
 	{
-		this.pos = [0, 0];
-		this.id = GEN_UUID();
+		super.init();
 
-		const image = width != null && height != null ? new Image(width, height) : new Image();
+		this.pos = [0, 0];
+
+		const image = width != null || height != null ? new Image(width, height) : new Image();
 		image.src = src;
 
 		this.image = image;
@@ -21,7 +21,10 @@ export class ImageTexture extends GameObject
 
 	update(ctx, dt)
 	{
-
+		for (const component of this.components)
+		{
+			component.update(ctx, dt);
+		}
 	}
 
 	/**
@@ -31,6 +34,8 @@ export class ImageTexture extends GameObject
 	 */
 	render(ctx)
 	{
+		super.render(ctx);
+
 		if (this.image === null) return;
 	
 		const width = this.image.width;
@@ -42,8 +47,6 @@ export class ImageTexture extends GameObject
 		const render_pos = [null, null];
 		render_pos[0] = this.pos[0] - (width / 2) - (camera_pos[0] - window_pos[0] / 2);
 		render_pos[1] = this.pos[1] - (height / 2) - (camera_pos[1] - window_pos[1] / 2);
-
-		// console.log('background: ', render_pos);
 
 		Utils.SetAlpha(1);
 

@@ -15,6 +15,8 @@ export class Player extends GameObject
 
 	height = 50;
 
+	name = '';
+
 	/**
 	 * 
 	 * @param {Array<number>} pos
@@ -23,8 +25,9 @@ export class Player extends GameObject
 	 * @param {number} state
 	 * @param {number} width
 	 * @param {number} height
+	 * @param {string} name
 	 */
-	init(pos, color, id, state, width, height)
+	init(pos, color, id, state, width, height, name)
 	{
 		this.width = width;
 		this.height = height;
@@ -32,6 +35,7 @@ export class Player extends GameObject
 		this.color = color;
 		this.id = id;
 		this.state = state;
+		this.name = name;
 	}
 
 	/**
@@ -67,10 +71,9 @@ export class Player extends GameObject
 		if (dist > 0)
 		{
 			this.pos[0] = Utils.clamp(this.pos[0] + direction_x, -987, 962);
-			this.pos[1] = Utils.clamp(this.pos[1] += direction_y, -983, 959);
-		}
+			this.pos[1] = Utils.clamp(this.pos[1] += direction_y, -975, 960);
 
-		console.log('player: ', this.pos);
+		}
 	}
 
 	InputUpdate(dt)
@@ -93,9 +96,19 @@ export class Player extends GameObject
 		render_pos[0] = this.pos[0] - (this.width / 2) - (camera_pos[0] - window_pos[0] / 2);
 		render_pos[1] = this.pos[1] - (this.height / 2) - (camera_pos[1] - window_pos[1] / 2);
 
-
 		Utils.SetColor(this.color);
 		ctx.fillRect(render_pos[0], render_pos[1], this.width * 2, this.height * 2);
+
+		Utils.SetColor(Color.WHITE);
+		ctx.font = 'bold 13px serif';
+		ctx.textAlign = 'start';
+
+		const text_width = ctx.measureText(this.name).width;
+		const pos_x = render_pos[0] + this.width;
+
+		const gap = render_pos[0] + text_width / 2 - pos_x;
+
+		ctx.fillText(this.name, render_pos[0] - gap, render_pos[1] - 20);
 	}
 
 	add_component(component)

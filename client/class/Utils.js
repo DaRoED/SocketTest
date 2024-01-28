@@ -1,3 +1,5 @@
+import { InputManager } from "./gameput.js";
+
 export const Color = 
 {
 	BLACK: 0,

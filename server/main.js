@@ -15,6 +15,7 @@ import { PacketUtil } from '../Packet/PacketUtil.js';
 import { RemoveObjectPacket } from '../Packet/RemoveObjectPacket.js';
 import { MyPlayerPacket } from '../Packet/MyPlayerPacket.js';
 import { MovePacket } from '../Packet/MovePacket.js';
+import { EnterPacket } from '../client/class/Packet/EnterPacket.js';
 
 const __dirname = path.resolve();
 const id = 81;
@@ -47,11 +48,13 @@ GRoom.Init();
 io.on('connection', socket => {
 	// 세션매니저를 통해 소켓으로 세션을 만들고 그 세션을 매니저에 등록
 	const session = SessionManager.createSession(socket);
+	console.log(`id ${session.getSocketId()} is connected`);
 
 
-	socket.on(PacketTypeEnum.enter, () =>
+	socket.on(PacketTypeEnum.enter, (packet_d) =>
 	{
-		console.log(`id ${session.getSocketId()} is connected`);
+		/** @type {EnterPacket} */
+		const packet = PacketUtil.Parse(packet_d);
 
 		// MyPlayer 패킷을 보냄 => 클라이언트에서 MyPlayer를 생성
 		const id = GENERATOR.uuid();
@@ -61,9 +64,9 @@ io.on('connection', socket => {
 		const height = 25;
 
 		const myPlayerPacket = new MyPlayerPacket();
-		myPlayerPacket.info  = new PlayerInfo(id, pos, color, States.Idle, width, height);
+		myPlayerPacket.info  = new PlayerInfo(id, pos, color, States.Idle, width, height, packet.name);
 
-		const player = new Player(session, States.Idle, color, pos, id, width, height);
+		const player = new Player(session, States.Idle, color, pos, id, width, height, packet.name);
 		session.player = player;
 
 		GRoom.add_object(player);
@@ -75,7 +78,7 @@ io.on('connection', socket => {
 
 		players.forEach((player, id) =>
 		{
-			const playerInfo = new PlayerInfo(player.id, player.pos, player.color, player.state, width, height);
+			const playerInfo = new PlayerInfo(player.id, player.pos, player.color, player.state, width, height, player.name);
 			addObjectPacket.objects.push(playerInfo);
 		});
 
@@ -106,7 +109,10 @@ io.on('connection', socket => {
 	{
 		console.log('disconnect: ' + socket.id, reason, description);
 
+		if (session.player == null) return;
+
 		const playerId = session.player.id;
+
 		GRoom.remove_object(playerId);
 
 		const removeObjectPacket = new RemoveObjectPacket();

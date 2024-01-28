@@ -2,6 +2,10 @@ import { GameObject } from "./GameObject.js";
 import { Scene } from "./Scene.js";
 // import { MyPlayer } from "./MyPlayer.js";
 import { ImageTexture } from "./ImageTexture.js";
+import { EnterPacket } from "./Packet/EnterPacket.js";
+import { PacketTypeEnum } from "./Packet/PacketType.js";
+import { PacketUtil } from "./Packet/PacketUtil.js";
+import { NetworkManager } from "./NetworkManager.js";
 
 export class GameScene extends Scene
 {
@@ -11,15 +15,22 @@ export class GameScene extends Scene
 	/**
 	 * 
 	 * @param {CanvasRenderingContext2D} ctx 
+	 * @param {string} my_player_name
 	 */
-	constructor(ctx)
+	constructor(ctx, my_player_name)
 	{
 		super(ctx);
+		this.my_player_name = my_player_name;
 	}
 
 	init()
 	{
 		super.init();
+
+		const enterPacket = new EnterPacket();
+		enterPacket.name = this.my_player_name;
+
+		NetworkManager.getSocket().emit(PacketTypeEnum.enter, PacketUtil.SerializePacket(enterPacket));
 
 		const background = new ImageTexture();
 		background.init('../resources/map.jpg');

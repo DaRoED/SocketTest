@@ -12,8 +12,8 @@ import { RemoveObjectPacket } from "./class/Packet/RemoveObjectPacket.js";
 import { limitLoop } from "./class/limitloop.js";
 import { MovePacket } from "./class/Packet/MovePacket.js";
 import { CameraComponent } from "./class/Components/CameraComponent.js";
-import { StartScene } from "./class/StartScene.js";
-import { ImageTexture } from "./class/ImageTexture.js";
+import { InputManager } from "./class/gameput.js";
+import { NetworkManager } from "./class/NetworkManager.js";
 
 const fps = 100;
 
@@ -44,7 +44,7 @@ window.onload = () =>
 		{
 			const playerInfo = packet.objects[i];
 			const player = new Player();
-			player.init(playerInfo.pos, playerInfo.color, playerInfo.id, playerInfo.state, playerInfo.width, playerInfo.height);
+			player.init(playerInfo.pos, playerInfo.color, playerInfo.id, playerInfo.state, playerInfo.width, playerInfo.height, playerInfo.name);
 
 			SceneManager.getInstance().getScene().add_object(player);
 		}
@@ -57,7 +57,7 @@ window.onload = () =>
 		const playerInfo = packet.info;
 
 		const my_player = new MyPlayer(socket);
-		my_player.init(playerInfo.pos, playerInfo.color, playerInfo.id, playerInfo.state, playerInfo.width, playerInfo.height);
+		my_player.init(playerInfo.pos, playerInfo.color, playerInfo.id, playerInfo.state, playerInfo.width, playerInfo.height, playerInfo.name);
 
 		my_player.add_component(new CameraComponent());
 
@@ -99,7 +99,7 @@ window.onload = () =>
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
 
-	init();
+	init(socket);
 	update();
 };
 
@@ -110,9 +110,10 @@ window.onresize = ev =>
 };
 
 
-function init()
+function init(socket)
 {
 	Utils.Init(ctx);
+	NetworkManager.init(socket);
 
 	SceneManager.getInstance().init(ctx, SceneType.Start);
 
@@ -132,6 +133,11 @@ function update()
 	// ctx.fillRect(0, 0, canvas.width, canvas.height);
 	scene.update(Utils.deltaTime);
 	scene.render();
+
+	const mouse_pos = InputManager.getMousePos(ctx);
+	Utils.SetColor(Color.WHITE);
+	ctx.font = '10px sans-serif';
+	ctx.fillText(`x: ${mouse_pos[0]} y: ${mouse_pos[1]}`, 100, 100);
 
 	Utils.calculateDeltaTime();
 }
