@@ -60,8 +60,8 @@ io.on('connection', socket => {
 		const id = GENERATOR.uuid();
 		const pos = [getRandom(250, 500), getRandom(250, 500)];
 		const color = getRandom(1, 6);
-		const width = 25;
-		const height = 25;
+		const width = 64;
+		const height = 128;
 
 		const myPlayerPacket = new MyPlayerPacket();
 		myPlayerPacket.info  = new PlayerInfo(id, pos, color, States.Idle, width, height, packet.name);

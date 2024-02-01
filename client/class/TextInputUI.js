@@ -6,8 +6,8 @@ export class TextInputUI extends UI
 	text_input_width = 0;
 	text_input_height = 0;
 
-	offset_x = 0;
-	offset_y = 0;
+	text_input_x = 0;
+	text_input_y = 0;
 
 	constructor(image_src, shape = UI_Shape.Rect, text_input_width = null, text_input_height = null, image_width = null, image_height = null)
 	{
@@ -17,14 +17,18 @@ export class TextInputUI extends UI
 		this.text_input_height = text_input_height;
 	}
 
-	init(ctx)
+	init(ctx, pos_x, pos_y)
 	{
+		this.text_input_x = pos_x;
+		this.text_input_y = pos_y;
+
 		const text_input = document.createElement("input");
 		text_input.setAttribute("type", "text");
 
 		text_input.style.width = `${this.text_input_width}px`;
 		text_input.style.height = `${this.text_input_height}px`;
 		text_input.id = "text_input_box";
+		text_input.className = 'fixed-input';
 
 		this.text_input = text_input;
 		document.body.appendChild(text_input);
@@ -48,7 +52,10 @@ export class TextInputUI extends UI
 		render_pos[0] = this.pos[0] - (this.text_input_width / 2) + window_pos[0] / 2;
 		render_pos[1] = this.pos[1] - (this.text_input_height / 2) + window_pos[1] / 2;
 
-		this.text_input.style.transform = `translate(${render_pos[0] + this.offset_x}px, ${render_pos[1] + this.offset_y}px)`;
+		this.text_input.style.left = `${this.text_input_x}%`;
+		this.text_input.style.top = `${this.text_input_y}%`;
+
+		// this.text_input.style.transform = `translate(${render_pos[0] + this.offset_x}px, ${render_pos[1] + this.offset_y}px)`;
 	}
 
 	remove()

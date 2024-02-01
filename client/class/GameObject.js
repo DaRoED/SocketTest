@@ -67,6 +67,13 @@ export class GameObject
 		}
     }
 
+	add_component(component)
+	{
+		component.init();
+		component.owner = this;
+		this.components.push(component);
+	}
+
 	/**
 	 * 
 	 * @param {Array<number, number>} pos 
@@ -78,6 +85,7 @@ export class GameObject
 	
 	setState(state)
 	{
+		if (state == this.state) return;
 		this.state = state;
 	}
 }

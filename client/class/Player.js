@@ -1,19 +1,17 @@
-import { GameObject, States } from "./GameObject.js";
+import { FlipbookActor } from "./FlipbookActor.js";
 import { SceneManager } from "./SceneManager.js";
 import { Color, Utils } from "./Utils.js";
+import { States } from "./GameObject.js";
 
-export class Player extends GameObject
+export class Player extends FlipbookActor
 {
-	/** @type {Color} */
-	color = null;
-
 	destPos = [0, 0];
 
 	moveSpped = 200;
 
-	width = 50;
+	width = 120;
 
-	height = 50;
+	height = 80;
 
 	name = '';
 
@@ -36,6 +34,11 @@ export class Player extends GameObject
 		this.id = id;
 		this.state = state;
 		this.name = name;
+	}
+
+	setAnimationSetting(image, start, cuts, repeat, repeat_time)
+	{
+		super.init(image, start, cuts, repeat, repeat_time);
 	}
 
 	/**
@@ -87,7 +90,7 @@ export class Player extends GameObject
 	 */
 	render(ctx)
 	{
-		super.render();
+		super.render(ctx);
 
 		const camera_pos = SceneManager.getInstance().getScene().camera_pos;
 		const window_pos = [ctx.canvas.width, ctx.canvas.height];
@@ -96,9 +99,6 @@ export class Player extends GameObject
 		render_pos[0] = this.pos[0] - (this.width / 2) - (camera_pos[0] - window_pos[0] / 2);
 		render_pos[1] = this.pos[1] - (this.height / 2) - (camera_pos[1] - window_pos[1] / 2);
 
-		Utils.SetColor(this.color);
-		ctx.fillRect(render_pos[0], render_pos[1], this.width * 2, this.height * 2);
-
 		Utils.SetColor(Color.WHITE);
 		ctx.font = 'bold 13px serif';
 		ctx.textAlign = 'start';
@@ -106,16 +106,9 @@ export class Player extends GameObject
 		const text_width = ctx.measureText(this.name).width;
 		const pos_x = render_pos[0] + this.width;
 
-		const gap = render_pos[0] + text_width / 2 - pos_x;
+		const gap = (render_pos[0] + text_width - pos_x) / 2;
 
-		ctx.fillText(this.name, render_pos[0] - gap, render_pos[1] - 20);
-	}
-
-	add_component(component)
-	{
-		component.init();
-		component.owner = this;
-		this.components.push(component);
+		ctx.fillText(this.name, render_pos[0] - gap, render_pos[1] - 10);
 	}
 
 	/**

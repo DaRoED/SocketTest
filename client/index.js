@@ -14,6 +14,7 @@ import { MovePacket } from "./class/Packet/MovePacket.js";
 import { CameraComponent } from "./class/Components/CameraComponent.js";
 import { InputManager } from "./class/gameput.js";
 import { NetworkManager } from "./class/NetworkManager.js";
+import { ResourceManager } from "./class/ResourceManager.js";
 
 const fps = 100;
 
@@ -58,6 +59,7 @@ window.onload = () =>
 
 		const my_player = new MyPlayer(socket);
 		my_player.init(playerInfo.pos, playerInfo.color, playerInfo.id, playerInfo.state, playerInfo.width, playerInfo.height, playerInfo.name);
+		my_player.setAnimationSetting(ResourceManager.getResource('player1_idle'), [0,0], [8, 4], true, 0.15);
 
 		my_player.add_component(new CameraComponent());
 

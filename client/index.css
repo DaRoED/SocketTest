@@ -25,3 +25,8 @@ canvas
 	border-radius: 0%;
 	outline: none;
 }
+
+.fixed-input {
+	position: relative;
+	transform: translate(-50%, -50%);
+}

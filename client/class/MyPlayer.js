@@ -4,11 +4,15 @@ import { Player } from "./Player.js"
 import { InputManager } from "./gameput.js";
 import { PacketTypeEnum } from "./Packet/PacketType.js";
 import { PacketUtil } from "./Packet/PacketUtil.js";
+import { Direction } from "./FlipbookActor.js";
+import { ResourceManager } from "./ResourceManager.js";
+import { States } from "./GameObject.js";
 
 export class MyPlayer extends Player
 {
 	/** @type {Socket} */
 	socket = null;
+	keyPressed = false;
 
 	constructor(socket)
 	{
@@ -24,6 +28,8 @@ export class MyPlayer extends Player
 	IdleUpdate(dt)
 	{
 		super.IdleUpdate(dt);
+
+		this.setAnimationSetting(ResourceManager.getResource('player1_running'), [0, 0], [8, 4], true, 0.15);
 	}
 
 	MoveUpdate(dt)
@@ -38,24 +44,34 @@ export class MyPlayer extends Player
 		if (InputManager.isPressed('a'))
 		{
 			moveVec[0]--;
-		}
-
-		if (InputManager.isPressed('w'))
-		{
-			moveVec[1]--;
+			this.setDirection(Direction.Left);
+			this.keyPressed = true;
 		}
 
 		if (InputManager.isPressed('s'))
 		{
 			moveVec[1]++;
+			this.setDirection(Direction.Down);
+			this.keyPressed = true;
+		}
+
+		if (InputManager.isPressed('w'))
+		{
+			moveVec[1]--;
+			this.setDirection(Direction.Up);
+			this.keyPressed = true;
 		}
 
 		if (InputManager.isPressed('d'))
 		{
 			moveVec[0]++;
+			this.setDirection(Direction.Right);
+			this.keyPressed = true;
 		}
 
 		const dist = Math.sqrt(moveVec[0] * moveVec[0] + moveVec[1] * moveVec[1]);
+
+		if (dist > 1) return;
 
 		if (dist > 0)
 		{
@@ -72,6 +88,26 @@ export class MyPlayer extends Player
 			movePacket.pos = this.destPos;
 
 			this.socket.emit(PacketTypeEnum.move, PacketUtil.SerializePacket(movePacket));
+		}
+		else
+		{
+			this.setState(States.Idle);
+		}
+	}
+
+	setState(state)
+	{
+		super.setState(state);
+
+		switch (state)
+		{
+			case States.Idle:
+				this.setAnimationSetting(ResourceManager.getResource('player1_idle'), [0, 0], [8, 4], true, 0.15);
+				break;
+
+			case States.Move:
+				this.setAnimationSetting(ResourceManager.getResource('player1_running'), [0, 0], [8, 4], true, 0.15);
+				break;
 		}
 	}
 }

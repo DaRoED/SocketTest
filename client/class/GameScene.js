@@ -6,6 +6,7 @@ import { EnterPacket } from "./Packet/EnterPacket.js";
 import { PacketTypeEnum } from "./Packet/PacketType.js";
 import { PacketUtil } from "./Packet/PacketUtil.js";
 import { NetworkManager } from "./NetworkManager.js";
+import { ResourceManager } from "./ResourceManager.js";
 
 export class GameScene extends Scene
 {
@@ -35,6 +36,12 @@ export class GameScene extends Scene
 		const background = new ImageTexture();
 		background.init('../resources/map.jpg');
 		this.add_object(background);
+
+		const player1_idle = new ImageTexture(); player1_idle.init('../resources/players/player1/idle.png');
+		ResourceManager.addResource('player1_idle', player1_idle);
+
+		const player1_running = new ImageTexture(); player1_running.init('../resources/players/player1/running.png');
+		ResourceManager.addResource('player1_running', player1_running);
 	}
 
 	/**

@@ -23,9 +23,8 @@ export class StartScene extends Scene
 		start_scene_background.init('../resources/start_scene_background.jpg', 1280, 720);
 
 		const textinputui = new TextInputUI('../resources/nickname_input_box.png', UI_Shape.Rect, 300, 40, 361, 70); // image 비율: 5.16(가로/세로)
-		textinputui.init(this.ctx);
+		textinputui.init(this.ctx, 49.8, 60.5);
 		textinputui.setPos(0, 100);
-		textinputui.setOffset(-5, -5);
 
 		const start_boutton = new ButtonUI('../resources/start_button.png', UI_Shape.Rect, 300, 90);
 		start_boutton.init();
