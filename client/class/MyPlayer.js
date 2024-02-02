@@ -5,7 +5,6 @@ import { InputManager } from "./gameput.js";
 import { PacketTypeEnum } from "./Packet/PacketType.js";
 import { PacketUtil } from "./Packet/PacketUtil.js";
 import { Direction } from "./FlipbookActor.js";
-import { ResourceManager } from "./ResourceManager.js";
 import { States } from "./GameObject.js";
 
 export class MyPlayer extends Player
@@ -28,8 +27,6 @@ export class MyPlayer extends Player
 	IdleUpdate(dt)
 	{
 		super.IdleUpdate(dt);
-
-		this.setAnimationSetting(ResourceManager.getResource('player1_running'), [0, 0], [8, 4], true, 0.15);
 	}
 
 	MoveUpdate(dt)
@@ -86,6 +83,7 @@ export class MyPlayer extends Player
 			const movePacket = new MovePacket();
 			movePacket.id = this.id;
 			movePacket.pos = this.destPos;
+			movePacket.direction = this.direction;
 
 			this.socket.emit(PacketTypeEnum.move, PacketUtil.SerializePacket(movePacket));
 		}
@@ -98,16 +96,5 @@ export class MyPlayer extends Player
 	setState(state)
 	{
 		super.setState(state);
-
-		switch (state)
-		{
-			case States.Idle:
-				this.setAnimationSetting(ResourceManager.getResource('player1_idle'), [0, 0], [8, 4], true, 0.15);
-				break;
-
-			case States.Move:
-				this.setAnimationSetting(ResourceManager.getResource('player1_running'), [0, 0], [8, 4], true, 0.15);
-				break;
-		}
 	}
 }

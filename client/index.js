@@ -15,6 +15,7 @@ import { CameraComponent } from "./class/Components/CameraComponent.js";
 import { InputManager } from "./class/gameput.js";
 import { NetworkManager } from "./class/NetworkManager.js";
 import { ResourceManager } from "./class/ResourceManager.js";
+import { FlipbookActor } from "./class/FlipbookActor.js";
 
 const fps = 100;
 
@@ -46,6 +47,7 @@ window.onload = () =>
 			const playerInfo = packet.objects[i];
 			const player = new Player();
 			player.init(playerInfo.pos, playerInfo.color, playerInfo.id, playerInfo.state, playerInfo.width, playerInfo.height, playerInfo.name);
+			player.setAnimationSetting(ResourceManager.getResource('player1_idle'), [0,0], [8, 4], true, 0.15);
 
 			SceneManager.getInstance().getScene().add_object(player);
 		}
@@ -59,7 +61,6 @@ window.onload = () =>
 
 		const my_player = new MyPlayer(socket);
 		my_player.init(playerInfo.pos, playerInfo.color, playerInfo.id, playerInfo.state, playerInfo.width, playerInfo.height, playerInfo.name);
-		my_player.setAnimationSetting(ResourceManager.getResource('player1_idle'), [0,0], [8, 4], true, 0.15);
 
 		my_player.add_component(new CameraComponent());
 
@@ -84,11 +85,13 @@ window.onload = () =>
 		/** @type {MovePacket} */
 		const packet = PacketUtil.Parse(packet_d);
 
+		/** @type {Player} */
 		const player = SceneManager.getInstance().getScene().find_object(packet.id);
 
 		if (player && (player.id !== SceneManager.getInstance().getScene().my_player.id))
 		{
 			player.setDestPos(packet.pos);
+			player.setDirection(packet.direction);
 		}
 	});
 

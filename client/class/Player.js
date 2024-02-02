@@ -2,6 +2,7 @@ import { FlipbookActor } from "./FlipbookActor.js";
 import { SceneManager } from "./SceneManager.js";
 import { Color, Utils } from "./Utils.js";
 import { States } from "./GameObject.js";
+import { ResourceManager } from "./ResourceManager.js";
 
 export class Player extends FlipbookActor
 {
@@ -136,5 +137,21 @@ export class Player extends FlipbookActor
 	setHeight(height)
 	{
 		this.height = height;
+	}
+
+	setState(state)
+	{
+		super.setState(state);
+
+		switch (state)
+		{
+			case States.Idle:
+				this.setAnimationSetting(ResourceManager.getResource('player1_idle'), [0, 0], [8, 4], true, 0.15);
+				break;
+
+			case States.Move:
+				this.setAnimationSetting(ResourceManager.getResource('player1_running'), [0, 0], [8, 4], true, 0.15);
+				break;
+		}
 	}
 }
