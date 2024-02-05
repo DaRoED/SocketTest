@@ -47,7 +47,6 @@ window.onload = () =>
 			const playerInfo = packet.objects[i];
 			const player = new Player();
 			player.init(playerInfo.pos, playerInfo.color, playerInfo.id, playerInfo.state, playerInfo.width, playerInfo.height, playerInfo.name);
-			player.setAnimationSetting(ResourceManager.getResource('player1_idle'), [0,0], [8, 4], true, 0.15);
 
 			SceneManager.getInstance().getScene().add_object(player);
 		}

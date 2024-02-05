@@ -37,11 +37,53 @@ export class GameScene extends Scene
 		background.init('../resources/map.jpg');
 		this.add_object(background);
 
-		const player1_idle = new ImageTexture(); player1_idle.init('../resources/players/player1/idle.png');
-		ResourceManager.addResource('player1_idle', player1_idle);
+		const player1_idle_down = new ImageTexture(); player1_idle_down.init('../resources/players/player1/idle_down.png');
+		ResourceManager.addResource('player1_idle_down', player1_idle_down);
 
-		const player1_running = new ImageTexture(); player1_running.init('../resources/players/player1/running.png');
-		ResourceManager.addResource('player1_running', player1_running);
+		const player1_idle_up = new ImageTexture(); player1_idle_up.init('../resources/players/player1/idle_up.png');
+		ResourceManager.addResource('player1_idle_up', player1_idle_up);
+
+		const player1_idle_left = new ImageTexture(); player1_idle_left.init('../resources/players/player1/idle_left.png');
+		ResourceManager.addResource('player1_idle_left', player1_idle_left);
+
+		const player1_idle_right = new ImageTexture(); player1_idle_right.init('../resources/players/player1/idle_right.png');
+		ResourceManager.addResource('player1_idle_right', player1_idle_right);
+
+		const player1_idle_downLeft = new ImageTexture(); player1_idle_downLeft.init('../resources/players/player1/idle_downLeft.png');
+		ResourceManager.addResource('player1_idle_downLeft', player1_idle_downLeft);
+
+		const player1_idle_downRight = new ImageTexture(); player1_idle_downRight.init('../resources/players/player1/idle_downRight.png');
+		ResourceManager.addResource('player1_idle_downRight', player1_idle_downRight);
+
+		const player1_idle_upLeft = new ImageTexture(); player1_idle_upLeft.init('../resources/players/player1/idle_upLeft.png');
+		ResourceManager.addResource('player1_idle_upLeft', player1_idle_upLeft);
+
+		const player1_idle_upRight = new ImageTexture(); player1_idle_upRight.init('../resources/players/player1/idle_upRight.png');
+		ResourceManager.addResource('player1_idle_upRight', player1_idle_upRight);
+
+		const player1_walk_down = new ImageTexture(); player1_walk_down.init('../resources/players/player1/walk_down.png');
+		ResourceManager.addResource('player1_walk_down', player1_walk_down);
+
+		const player1_walk_up = new ImageTexture(); player1_walk_up.init('../resources/players/player1/walk_up.png');
+		ResourceManager.addResource('player1_walk_up', player1_walk_up);
+
+		const player1_walk_left = new ImageTexture(); player1_walk_left.init('../resources/players/player1/walk_left.png');
+		ResourceManager.addResource('player1_walk_left', player1_walk_left);
+
+		const player1_walk_right = new ImageTexture(); player1_walk_right.init('../resources/players/player1/walk_right.png');
+		ResourceManager.addResource('player1_walk_right', player1_walk_right);
+
+		const player1_walk_downLeft = new ImageTexture(); player1_walk_downLeft.init('../resources/players/player1/walk_downLeft.png');
+		ResourceManager.addResource('player1_walk_downLeft', player1_walk_downLeft);
+
+		const player1_walk_downRight = new ImageTexture(); player1_walk_downRight.init('../resources/players/player1/walk_downRight.png');
+		ResourceManager.addResource('player1_walk_downRight', player1_walk_downRight);
+
+		const player1_walk_upLeft = new ImageTexture(); player1_walk_upLeft.init('../resources/players/player1/walk_upLeft.png');
+		ResourceManager.addResource('player1_walk_upLeft', player1_walk_upLeft);
+
+		const player1_walk_upRight = new ImageTexture(); player1_walk_upRight.init('../resources/players/player1/walk_upRight.png');
+		ResourceManager.addResource('player1_walk_upRight', player1_walk_upRight);
 	}
 
 	/**

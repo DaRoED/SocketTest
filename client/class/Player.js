@@ -1,4 +1,4 @@
-import { FlipbookActor } from "./FlipbookActor.js";
+import { Direction, FlipbookActor } from "./FlipbookActor.js";
 import { SceneManager } from "./SceneManager.js";
 import { Color, Utils } from "./Utils.js";
 import { States } from "./GameObject.js";
@@ -15,6 +15,8 @@ export class Player extends FlipbookActor
 	height = 80;
 
 	name = '';
+
+	lastState = States.None;
 
 	/**
 	 * 
@@ -33,13 +35,14 @@ export class Player extends FlipbookActor
 		this.pos = pos;
 		this.color = color;
 		this.id = id;
-		this.state = state;
 		this.name = name;
+
+		this.setState(state);
 	}
 
-	setAnimationSetting(image, start, cuts, repeat, repeat_time)
+	setAnimationSetting(image, start, cuts, repeat, repeat_time, sizes)
 	{
-		super.init(image, start, cuts, repeat, repeat_time);
+		super.init(image, start, cuts, repeat, repeat_time, sizes);
 	}
 
 	/**
@@ -146,11 +149,77 @@ export class Player extends FlipbookActor
 		switch (state)
 		{
 			case States.Idle:
-				this.setAnimationSetting(ResourceManager.getResource('player1_idle'), [0, 0], [8, 4], true, 0.15);
+				switch (this.direction)
+				{
+					case Direction.Down:
+						this.setAnimationSetting(ResourceManager.getResource('player1_idle_down'), [100, 50], [14, 4], true, 0.15, [55, 124]);
+						break;
+
+					case Direction.Up:
+						this.setAnimationSetting(ResourceManager.getResource('player1_idle_up'), [100, 50], [14, 4], true, 0.15, [55, 124]);
+						break;
+
+					case Direction.Left:
+						this.setAnimationSetting(ResourceManager.getResource('player1_idle_left'), [100, 50], [14, 4], true, 0.15, [55, 124]);
+						break;
+
+					case Direction.Right:
+						this.setAnimationSetting(ResourceManager.getResource('player1_idle_right'), [100, 50], [14, 4], true, 0.15, [55, 124]);
+						break;
+
+					case Direction.DownLeft:
+						this.setAnimationSetting(ResourceManager.getResource('player1_idle_downLeft'), [100, 50], [14, 4], true, 0.15, [55, 124]);
+						break;
+
+					case Direction.DownRight:
+						this.setAnimationSetting(ResourceManager.getResource('player1_idle_downRight'), [100, 50], [14, 4], true, 0.15, [55, 124]);
+						break;
+
+					case Direction.UpLeft:
+						this.setAnimationSetting(ResourceManager.getResource('player1_idle_upLeft'), [100, 50], [14, 4], true, 0.15, [55, 124]);
+						break;
+
+					case Direction.UpRight:
+						this.setAnimationSetting(ResourceManager.getResource('player1_idle_upRight'), [100, 100], [14, 4], true, 0.15, [55, 124]);
+						break;
+				}
 				break;
 
 			case States.Move:
-				this.setAnimationSetting(ResourceManager.getResource('player1_running'), [0, 0], [8, 4], true, 0.15);
+				switch (this.direction)
+				{
+					case Direction.Down:
+						this.setAnimationSetting(ResourceManager.getResource('player1_walk_down'), [100, 45], [9, 4], true, 0.15, [55, 124]);
+						break;
+
+					case Direction.Up:
+						this.setAnimationSetting(ResourceManager.getResource('player1_walk_up'), [100, 45], [9, 4], true, 0.15, [55, 124]);
+						break;
+
+					case Direction.Left:
+						this.setAnimationSetting(ResourceManager.getResource('player1_walk_left'), [100, 45], [9, 4], true, 0.15, [55, 124]);
+						break;
+
+					case Direction.Right:
+						this.setAnimationSetting(ResourceManager.getResource('player1_walk_right'), [100, 45], [9, 4], true, 0.15, [55, 124]);
+						break;
+
+					case Direction.DownLeft:
+						this.setAnimationSetting(ResourceManager.getResource('player1_walk_downLeft'), [100, 45], [9, 4], true, 0.15, [55, 124]);
+						break;
+
+					case Direction.DownRight:
+						this.setAnimationSetting(ResourceManager.getResource('player1_walk_downRight'), [100, 45], [9, 4], true, 0.15, [55, 124]);
+						break;
+
+					case Direction.UpLeft:
+						this.setAnimationSetting(ResourceManager.getResource('player1_walk_upLeft'), [100, 45], [9, 4], true, 0.15, [55, 124]);
+						break;
+
+					case Direction.UpRight:
+						this.setAnimationSetting(ResourceManager.getResource('player1_walk_upRight'), [100, 45], [9, 4], true, 0.15, [55, 124]);
+						break;
+				}
 				break;
 		}
 	}

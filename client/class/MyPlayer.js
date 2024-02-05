@@ -38,37 +38,73 @@ export class MyPlayer extends Player
 	{
 		const moveVec = [0, 0];
 
+		if (InputManager.isPressed('w'))
+		{
+			moveVec[1]--;
+		}
+
 		if (InputManager.isPressed('a'))
 		{
 			moveVec[0]--;
-			this.setDirection(Direction.Left);
-			this.keyPressed = true;
 		}
 
 		if (InputManager.isPressed('s'))
 		{
 			moveVec[1]++;
-			this.setDirection(Direction.Down);
-			this.keyPressed = true;
-		}
-
-		if (InputManager.isPressed('w'))
-		{
-			moveVec[1]--;
-			this.setDirection(Direction.Up);
-			this.keyPressed = true;
 		}
 
 		if (InputManager.isPressed('d'))
 		{
 			moveVec[0]++;
-			this.setDirection(Direction.Right);
-			this.keyPressed = true;
+		}
+
+		if (moveVec[1] === -1)
+		{
+			if (moveVec[0] === -1)
+			{
+				this.setDirection(Direction.UpLeft);
+			}
+			else if (moveVec[0] === 0)
+			{
+				this.setDirection(Direction.Up);
+			}
+			else if (moveVec[0] === 1)
+			{
+				this.setDirection(Direction.UpRight);
+			}
+		}
+		else if (moveVec[1] === 0)
+		{
+			if (moveVec[0] === -1)
+			{
+				this.setDirection(Direction.Left);
+			}
+			else if (moveVec[0] === 0)
+			{
+				
+			}
+			else if (moveVec[0] === 1)
+			{
+				this.setDirection(Direction.Right);
+			}
+		}
+		else if (moveVec[1] === 1)
+		{
+			if (moveVec[0] === -1)
+			{
+				this.setDirection(Direction.DownLeft);
+			}
+			else if (moveVec[0] === 0)
+			{
+				this.setDirection(Direction.Down);
+			}
+			else if (moveVec[0] === 1)
+			{
+				this.setDirection(Direction.DownRight);
+			}
 		}
 
 		const dist = Math.sqrt(moveVec[0] * moveVec[0] + moveVec[1] * moveVec[1]);
-
-		if (dist > 1) return;
 
 		if (dist > 0)
 		{
